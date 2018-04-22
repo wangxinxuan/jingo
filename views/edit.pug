@@ -21,7 +21,7 @@ block content
         input.form-control(rquired, type='text', placeholder='Enter the page title', name='pageTitle', value=coalesce(formData.pageTitle, ''))#js--pageTitle
         input(type="hidden", name="_method", value="put")
 
-      .form-group
+      .form-group#editSection
         textarea.form-control(name="content", rows=25)#js--editor #{coalesce(formData.content, '')}
 
       .form-group

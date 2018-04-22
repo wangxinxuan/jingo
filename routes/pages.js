@@ -68,6 +68,7 @@ function _getPagesNew (req, res) {
   res.render('create', {
     title: app.locals.config.get('application').title + ' – Create page ' + title,
     pageTitle: title,
+    markdownEditor: app.locals.config.get('features').editor,
     pageName: page ? page.wikiname : ''
   })
 }
@@ -252,6 +253,7 @@ function _getPagesEdit (req, res) {
     res.render('edit', {
       title: app.locals.config.get('application').title + ' – Edit page ' + page.title,
       page: page,
+      markdownEditor: app.locals.config.get('features').editor,
       warning: warning
     })
   })

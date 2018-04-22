@@ -33,7 +33,7 @@ describe('Config', function () {
     expect(def.application.staticWhitelist).to.equal('/\\.png$/i, /\\.jpg$/i, /\\.gif$/i')
     expect(def.application.proxyPath).to.equal('')
 
-    expect(def.features.codemirror).to.be.true
+    expect(def.features.editor).to.equal('codemirror')
     expect(def.features.markitup).to.be.false
 
     expect(def.server.hostname).to.equal('localhost')

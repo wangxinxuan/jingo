@@ -82,10 +82,24 @@ function _getWikiPage (req, res) {
       res.locals.notice = req.session.notice
       delete req.session.notice
 
+      // if use codemirror editor, then need render markdown
+      var markdownEditor = app.locals.config.get('features').editor;
+      var showTitle;
+      var showContent;
+      if ('codemirror' === markdownEditor) {
+        showTitle = app.locals.config.get('application').title + ' – ' + page.title;
+        showContent =  renderer.render('# ' + page.title + '\n' + page.content);
+      } else { // if use another editor, then return raw markdown, use previewer in page
+        showTitle = page.title;
+        showContent = page.content;
+      }
+
       res.render('show', {
         page: page,
-        title: app.locals.config.get('application').title + ' – ' + page.title,
-        content: renderer.render('# ' + page.title + '\n' + page.content)
+        markdownEditor,
+        title: showTitle,
+        content: showContent,
+        showContent: showContent
       })
     } else {
       if (req.user) {

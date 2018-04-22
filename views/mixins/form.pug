@@ -54,28 +54,67 @@ mixin errors(err)
             b= v.msg || v
 
 mixin featuresStylesheets()
-  +asset("/css/codemirror-ext.css")(type="text/css")
-  +asset("/vendor/codemirror/codemirror.css")(type="text/css")
-  +asset("/vendor/codemirror/fullscreen.css")(type="text/css")
+  case markdownEditor
+    when 'codemirror'
+      +asset("/css/codemirror-ext.css")(type="text/css")
+      +asset("/vendor/codemirror/codemirror.css")(type="text/css")
+      +asset("/vendor/codemirror/fullscreen.css")(type="text/css")
+    when 'editormd'
+      +asset("/editor.md/css/editormd.css")(type="text/css")
+      +asset("/editor.md/css/editormd.preview.css")(type="text/css")
 
 mixin featuresJavaScripts()
-  +asset("/vendor/codemirror/codemirror.min.js")
-  script.
-    Jingo.cmInstance = CodeMirror.fromTextArea(document.getElementById('js--editor'), {
-      lineNumbers: true,
-      mode: 'gfm',
-      matchBrackets: true,
-      lineWrapping: true,
-      extraKeys: {
-        'Ctrl-Enter': function(cm) {
-          Jingo.toggleFullscreen();
-        },
-        'Ctrl-S': function(cm) {
-          Jingo.save();
-        }
-      }
-    });
-    Jingo.toolbar();
+  case markdownEditor
+    when 'codemirror'
+      +asset("/vendor/codemirror/codemirror.min.js")
+      script.
+        Jingo.cmInstance = CodeMirror.fromTextArea(document.getElementById('js--editor'), {
+          lineNumbers: true,
+          mode: 'gfm',
+          matchBrackets: true,
+          lineWrapping: true,
+          extraKeys: {
+            'Ctrl-Enter': function(cm) {
+              Jingo.toggleFullscreen();
+            },
+            'Ctrl-S': function(cm) {
+              Jingo.save();
+            }
+          }
+        });
+        Jingo.toolbar();
+    when 'editormd'
+      +asset("/editor.md/editormd.js")
+      script.
+        $(function() {
+          var editor = editormd("editSection", {
+            //- autoHeight: true,
+            height: 580, // "100%", todo: need modify to fit screen height
+            path : "/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+            htmlDecode : "style,script,iframe|on*",
+            emoji : true,
+            taskList : true,
+            tocm: true,
+            tex: true,
+            flowChart : true,
+            sequenceDiagram : true,
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/uploadRouter",
+            onload : function() {
+              console.log('onload', this);
+              //this.fullscreen();
+              //this.unwatch();
+              //this.watch().fullscreen();
+
+              //this.setMarkdown("#PHP");
+              //this.width("100%");
+              //this.height(480);
+              //this.resize("100%", 640);
+            }
+          });
+          //- console.error('editor', editor)
+        });
 
 mixin warning()
   -var warning = locals.warning;
