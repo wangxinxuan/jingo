@@ -31,6 +31,10 @@ include mixins/links
                   input.form-control(type="text", value=term_ph, data-i-search-input="true",name="term",placeholder="Search the wiki")
                   span.input-group-btn
                     button.btn.btn-primary(type="submit") Search
+
+            .tools
+              block tools
+              
             .navbar-right
               if isAnonymous()
                 p.user You're not&nbsp;
@@ -43,8 +47,8 @@ include mixins/links
                   +anchor('/logout')(title='Become anonymous')
                     i.icon.ion-power
 
-      .tools
-        block tools
+      //- .tools
+      //-   block tools
 
       .container
 
