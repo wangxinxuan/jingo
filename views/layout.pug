@@ -50,18 +50,20 @@ include mixins/links
 
         .row
           if hasSidebar()
-            .col-md-2.with-sidebar
+            .col-md-4.with-sidebar
               .content !{_sidebar}
+              <hr />
+              #custom-toc-container
           else
-            .col-md-2
+            .col-md-4#custom-toc-container
 
-          #main.hide-tools.col-md-10
+          #main.hide-tools.col-md-8
             block content
 
         if hasFooter()
           .row
-            .col-md-2
-            .col-md-10.with-footer
+            .col-md-4
+            .col-md-8.with-footer
               .content !{_footer}
 
       script(src=proxyPath + "/vendor/jquery.min.js")
