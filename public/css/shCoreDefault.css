@@ -48,6 +48,9 @@
 }
 
 /* Override Bootstrap */
+.container {
+  width: 100% !important;
+}
 
 .syntaxhighlighter .container {
   padding: 0;
